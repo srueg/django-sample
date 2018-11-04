@@ -1,0 +1,27 @@
+version: "3"
+services:
+  web:
+    image: docker.io/srueg/django-sample:latest
+    build: ./
+    user: "1000:1000"
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    environment:
+      DJANGO_DB_PASSWORD: J1u6LeFGq3NWVeM4mkPO1bJ
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:11-alpine
+    user: postgres
+    environment:
+      POSTGRES_USER: django
+      POSTGRES_PASSWORD: J1u6LeFGq3NWVeM4mkPO1bJ
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
